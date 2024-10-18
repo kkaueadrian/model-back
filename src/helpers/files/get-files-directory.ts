@@ -2,10 +2,11 @@ import fs from 'fs/promises'
 import path from 'path'
 
 type FileList = {
+   fullPath: string
+   previousPath: string
    file: string
    filename: string
    ext: string
-   fullPath: string
 }
 
 export async function getFilesDirectory(directory: string) {
@@ -23,10 +24,11 @@ export async function getFilesDirectory(directory: string) {
                await traverseDirectory(fullPath)
             } else {
                filesList.push({
+                  fullPath,
+                  previousPath: fullPath.split('\\')[fullPath.split('\\').length - 2],
                   file,
                   filename: path.basename(file, path.extname(file)),
-                  ext: path.extname(file),
-                  fullPath
+                  ext: path.extname(file)
                })
             }
          }
